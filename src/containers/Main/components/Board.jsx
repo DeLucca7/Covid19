@@ -29,4 +29,8 @@ function Board({ data }) {
     )
 }
 
+Board.propTypes = {
+    data: PropTypes.object.isRequired
+}
+
 export default memo(Board)

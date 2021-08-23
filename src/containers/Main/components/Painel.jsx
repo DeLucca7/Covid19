@@ -1,5 +1,6 @@
 import React, { memo } from 'react';
-import RefreshIcon from '../../../assets/images/refresh.png';
+import PropTypes from 'prop-types'
+import RefreshIcon from '../../../assets/images/refresh.svg';
 import { Card, Typography, Button, Select, MenuItem } from '../../../components';
 import COUNTRIES from '../../../commons/constants/countries'
 import { CardPanelContentStyled, ItemStyled } from './style';
@@ -18,7 +19,8 @@ function Painel({ updateAt, onChange, data, country, getCovidData }) {
         </MenuItem>
     )
 
-    const textCovid19 = `País: ${country} - recuperados: ${recovered}`
+    const textCovid19 = `País: ${country} - Dados atualizados em ${updateAt} - Hoje - Casos: ${todayCases}. 
+    Óbitos: ${todayDeaths}. Total - Casos: ${cases}. Óbitos: ${deaths}. Recuperados: ${recovered}`
 
     const copyInfo = () => {
         navigator.clipboard.writeText(textCovid19)
@@ -55,6 +57,7 @@ function Painel({ updateAt, onChange, data, country, getCovidData }) {
                     <Typography variant="h5" components="span" color="primary">COVID-19</Typography>
                     <Typography variant="h6" components="span" color="primary">Painel Coronavírus</Typography>
                     <Typography variant="body2" components="span" color="primary">Atualizado em: {updateAt}</Typography>
+                    <img src={RefreshIcon} alt="Atualizar" onClick={() => getCovidData(country)} className="cursor" />
                     <div className="pt-2">
                         <Select onChange={onChange} value={country}>
                             {COUNTRIES.map(renderCountries)}
@@ -65,6 +68,13 @@ function Painel({ updateAt, onChange, data, country, getCovidData }) {
             </CardPanelContentStyled>
         </Card>
     )
+}
+
+Painel.propTypes = {
+    data: PropTypes.object.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+    country: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired
 }
 
 export default memo(Painel)
