@@ -9,9 +9,6 @@ const headers = {
 function getCountry(country) {
     return fetch(`${path}/${country}`, headers)
         .then((response) => response.json())
-        .catch(function (err) {
-            console.error('Failed retrieving information', err);
-        })
 }
 
 export default {
